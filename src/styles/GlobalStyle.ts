@@ -1,5 +1,13 @@
 import { createGlobalStyle } from "styled-components"
 
+const devices = {
+  mobile: "@media (max-width: 770px)",
+  tablet: "@media (min-width: 770px) and (max-width: 1024px)",
+  desktop: "@media (min-width: 1024px)",
+}
+
+export const caseDevice = (device: keyof typeof devices) => devices[device]
+
 export const GlobalStyle = createGlobalStyle`
     *{
         margin: 0;
@@ -13,7 +21,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     body {
-        background-color: ${({ theme }) => theme.colors["gray-500"]};
+        background-color: ${({ theme }) => theme.colors["gray-800"]};
         color: ${({ theme }) => theme.colors["gray-100"]};
     }
 
