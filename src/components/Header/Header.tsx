@@ -7,8 +7,8 @@ import { useDevice } from "../../hooks/useDevice"
 export const Header: React.FC = () => {
   const { isMobile } = useDevice()
   const getTitleButton = () => {
-    if (isMobile) return "+"
-    return "Nova transação"
+    if (isMobile) return <S.Plus />
+    return "Inserir transação"
   }
 
   return (

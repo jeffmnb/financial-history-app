@@ -4,28 +4,62 @@ import { caseDevice } from "../../styles/GlobalStyle"
 export const S = {
   Container: styled.div`
     display: flex;
+    flex-direction: column;
     position: relative;
-    justify-content: center;
   `,
   SummaryCardsList: styled.div`
     width: 100%;
     overflow: scroll;
     display: flex;
     gap: 2rem;
-    flex-direction: row;
     margin-top: 2.5rem;
     top: 5.375rem;
     position: absolute;
-    padding-left: 10rem;
-    padding-right: 10rem;
+    justify-content: center;
 
     ${caseDevice("mobile")} {
       padding-left: 1.5rem;
       padding-right: 1.5rem;
+      justify-content: start;
+      gap: 2rem;
     }
 
     ${caseDevice("tablet")} {
       padding-right: 10rem;
+      justify-content: start;
+      padding: 0 10rem;
+      gap: 2rem;
+    }
+  `,
+  TransactionArea: styled.div`
+    position: absolute;
+    top: 20rem;
+    padding: 0 10em;
+    width: 100%;
+
+    ${caseDevice("mobile")} {
+      padding: 0 1.5em;
+    }
+  `,
+  TransactionLabels: styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 1.125rem;
+    color: ${({ theme }) => theme.colors["gray-300"]};
+    margin-bottom: 1.25rem;
+  `,
+  Label: styled.p``,
+  CountItens: styled.p`
+    color: ${({ theme }) => theme.colors["gray-500"]};
+  `,
+  TransactionsList: styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    ${caseDevice("mobile")} {
+      gap: 0.75rem;
     }
   `,
 }

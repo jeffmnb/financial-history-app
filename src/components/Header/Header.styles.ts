@@ -1,5 +1,6 @@
 import { styled } from "styled-components"
 import { caseDevice } from "../../styles/GlobalStyle"
+import { Plus } from "@phosphor-icons/react"
 
 export const S = {
   Container: styled.header`
@@ -39,5 +40,8 @@ export const S = {
     ${caseDevice("mobile")} {
       font-size: 1.2rem;
     }
+  `,
+  Plus: styled(Plus).attrs({ size: 20, weight: "bold" })`
+    margin-top: 0.2813rem;
   `,
 }

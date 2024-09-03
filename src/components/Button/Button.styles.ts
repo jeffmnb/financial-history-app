@@ -1,11 +1,11 @@
 import { styled } from "styled-components"
-import { ButtonTypes } from "./Button.types"
+import { ButtonProps } from "./Button.types"
 import { MagnifyingGlass } from "@phosphor-icons/react"
 import { caseDevice } from "../../styles/GlobalStyle"
 
 export const S = {
-  Container: styled.div<Omit<ButtonTypes, "text">>`
-    height: 3.125rem;
+  Container: styled.div<Omit<ButtonProps, "text">>`
+    min-height: 3.125rem;
     width: ${({ fullWidth }) => (fullWidth ? "100%" : "fit-content")};
     display: flex;
     gap: 0.75rem;
