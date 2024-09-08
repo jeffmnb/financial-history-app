@@ -1,0 +1,12 @@
+:root {
+    --rsbs-bg: #202024;
+    --rsbs-handle-bg: transparent;
+
+    reach-portal {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+}

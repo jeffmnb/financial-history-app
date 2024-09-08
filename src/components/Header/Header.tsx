@@ -3,6 +3,7 @@ import { S } from "./Header.styles"
 import LogoApp from "../../assets/AppIcon.svg"
 import { Button } from "../Button"
 import { useDevice } from "../../hooks/useDevice"
+import { openTransactionModal } from "../../global/components/TransactionModal"
 
 export const Header: React.FC = () => {
   const { isMobile } = useDevice()
@@ -18,7 +19,11 @@ export const Header: React.FC = () => {
           <S.Logo src={LogoApp} />
           <S.Title>Financial App</S.Title>
         </S.LogoArea>
-        <Button text={getTitleButton()} variant="primary" />
+        <Button
+          onClick={openTransactionModal}
+          text={getTitleButton()}
+          variant="primary"
+        />
       </S.Content>
     </S.Container>
   )

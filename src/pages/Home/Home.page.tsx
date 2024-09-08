@@ -11,6 +11,7 @@ import {
   CategoryValue,
   TransactionCardProps,
 } from "../../components/TransactionCard/TransactionCard.types"
+import { TransactionModal } from "../../global/components/TransactionModal"
 
 export const HomePage: React.FC = () => {
   const { isMobile } = useDevice()
@@ -65,6 +66,7 @@ export const HomePage: React.FC = () => {
           <TransactionCard {...exampleTransaction2} />
         </S.TransactionsList>
       </S.TransactionArea>
+      <TransactionModal />
     </S.Container>
   )
 }
