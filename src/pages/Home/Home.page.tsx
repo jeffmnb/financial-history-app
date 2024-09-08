@@ -11,7 +11,7 @@ import {
   CategoryValue,
   TransactionCardProps,
 } from "../../components/TransactionCard/TransactionCard.types"
-import { TransactionModal } from "../../global/components/TransactionModal"
+import { TransactionModal } from "./components/TransactionModal"
 
 export const HomePage: React.FC = () => {
   const { isMobile } = useDevice()

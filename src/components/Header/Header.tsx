@@ -3,7 +3,7 @@ import { S } from "./Header.styles"
 import LogoApp from "../../assets/AppIcon.svg"
 import { Button } from "../Button"
 import { useDevice } from "../../hooks/useDevice"
-import { openTransactionModal } from "../../global/components/TransactionModal"
+import { openTransactionModal } from "../../pages/Home/components/TransactionModal"
 
 export const Header: React.FC = () => {
   const { isMobile } = useDevice()

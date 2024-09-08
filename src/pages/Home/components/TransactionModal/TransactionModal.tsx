@@ -1,9 +1,9 @@
 import React, { createRef } from "react"
 
 import { S } from "./TransactionModal.styles"
-import { ModalTemplate } from "../ModalTemplate"
-import { Button } from "../../../components/Button"
-import { Input } from "../../../components/Input"
+import { ModalTemplate } from "../../../../global/components/ModalTemplate"
+import { Button } from "../../../../components/Button"
+import { Input } from "../../../../components/Input"
 import { TransactionModalProps } from "./TransactionModal.types"
 
 const transactionModalRef = createRef<TransactionModalProps>()
