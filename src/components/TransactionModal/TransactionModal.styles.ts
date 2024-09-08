@@ -19,5 +19,11 @@ export const S = {
     gap: 0.75rem;
     margin-bottom: 1rem;
   `,
+  SelectorWrapper: styled.div`
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+  `,
   Button: styled.button``,
 }

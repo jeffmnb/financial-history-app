@@ -33,9 +33,11 @@ export const S = {
     align-items: center;
   `,
   Title: styled.p`
+    color: ${({ theme }) => theme.colors["gray-100"]};
     text-align: start;
     font-size: 1.25rem;
     line-height: 1.5rem;
+    font-weight: bold;
   `,
   Container: styled.div`
     padding: 0.5rem 2rem 2rem 2rem;

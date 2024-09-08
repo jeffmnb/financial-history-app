@@ -1,10 +1,12 @@
 import React, { createRef } from "react"
 
 import { S } from "./TransactionModal.styles"
-import { ModalTemplate } from "../../../../global/components/ModalTemplate"
-import { Button } from "../../../../components/Button"
-import { Input } from "../../../../components/Input"
+
 import { TransactionModalProps } from "./TransactionModal.types"
+import { TransactionSelector } from "../TransactionSelector/TransactionSelector"
+import { ModalTemplate } from "../../global/components/ModalTemplate"
+import { Input } from "../Input"
+import { Button } from "../Button"
 
 const transactionModalRef = createRef<TransactionModalProps>()
 
@@ -26,6 +28,12 @@ export const TransactionModal: React.FC = () => {
           <Input placeholder="Preço" />
           <Input placeholder="Categoria" />
         </S.InputsWrapper>
+
+        <S.SelectorWrapper>
+          <TransactionSelector transactionType="input" />
+          <TransactionSelector transactionType="output" />
+        </S.SelectorWrapper>
+
         <Button variant="primary" text="Cadastrar" fullWidth />
       </S.Container>
     </ModalTemplate>

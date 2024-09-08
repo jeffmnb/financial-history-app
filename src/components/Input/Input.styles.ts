@@ -10,7 +10,8 @@ export const S = {
     border: 0 solid transparent;
 
     &:focus {
-      border: 0 solid ${({ theme }) => theme.colors["green-300"]};
+      box-shadow: none;
+      border-bottom: 1px solid ${({ theme }) => theme.colors["green-300"]};
     }
   `,
 }
