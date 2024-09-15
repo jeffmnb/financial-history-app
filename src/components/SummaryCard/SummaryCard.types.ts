@@ -1,6 +1,6 @@
 export type SummaryCardProps = {
   type: SummaryCardVariant
-  value?: string
+  value?: number
 }
 
 export enum SummaryCardVariant {

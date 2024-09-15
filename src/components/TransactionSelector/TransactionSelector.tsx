@@ -3,6 +3,7 @@ import { TransactionSelectorProps } from "./TransactionSelector.types"
 
 export const TransactionSelector = ({
   transactionType,
+  ...props
 }: TransactionSelectorProps) => {
   const getTitle = () => {
     if (transactionType === "input") return "Entrada"
@@ -10,7 +11,7 @@ export const TransactionSelector = ({
   }
 
   return (
-    <S.Container transactionType={transactionType}>
+    <S.Container {...props} transactionType={transactionType}>
       <S.Icon transactionType={transactionType} />
       <S.Title>{getTitle()}</S.Title>
     </S.Container>

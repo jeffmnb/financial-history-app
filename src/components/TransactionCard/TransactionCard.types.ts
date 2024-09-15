@@ -1,4 +1,5 @@
 export type TransactionCardProps = {
+  id: number
   title: string
   transaction: TransactionValue
   category: CategoryValue
@@ -6,7 +7,7 @@ export type TransactionCardProps = {
 }
 
 export type TransactionValue = {
-  value: string
+  value: number
   status: "input" | "output"
 }
 

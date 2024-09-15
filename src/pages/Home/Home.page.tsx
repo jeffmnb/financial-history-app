@@ -7,32 +7,15 @@ import { TransactionCard } from "../../components/TransactionCard"
 import { Render } from "../../components/Render/Render"
 import { useDevice } from "../../hooks/useDevice"
 import { SearchForm } from "../../components/SearchForm"
-import {
-  CategoryValue,
-  TransactionCardProps,
-} from "../../components/TransactionCard/TransactionCard.types"
 import { TransactionModal } from "../../components/TransactionModal"
+import { useHomePage } from "./Home.logic"
 
 export const HomePage: React.FC = () => {
   const { isMobile } = useDevice()
+  const { transactions, summaryDetails } = useHomePage()
 
-  const inputsValue = "826.672,00"
-  const outputsValue = "5.235,00"
-  const currentValue = "821.437,00"
+  if (!transactions.length) return <></>
 
-  const exampleTransaction = {
-    title: "Investimento em BTC",
-    category: CategoryValue.INVESTMENTS,
-    date: new Date().toString(),
-    transaction: { status: "input", value: "2.500" },
-  } as TransactionCardProps
-
-  const exampleTransaction2 = {
-    title: "Mcdonalds",
-    category: CategoryValue.FOOD,
-    date: new Date().toString(),
-    transaction: { status: "output", value: "161" },
-  } as TransactionCardProps
   return (
     <S.Container>
       <Header />
@@ -40,17 +23,17 @@ export const HomePage: React.FC = () => {
         <SummaryCard
           key={SummaryCardVariant.INPUT}
           type={SummaryCardVariant.INPUT}
-          value={inputsValue}
+          value={summaryDetails.input}
         />
         <SummaryCard
           key={SummaryCardVariant.OUTPUT}
           type={SummaryCardVariant.OUTPUT}
-          value={outputsValue}
+          value={summaryDetails.output}
         />
         <SummaryCard
           key={SummaryCardVariant.CURRENT}
           type={SummaryCardVariant.CURRENT}
-          value={currentValue}
+          value={summaryDetails.total}
         />
       </S.SummaryCardsList>
       <S.TransactionArea>
@@ -62,8 +45,9 @@ export const HomePage: React.FC = () => {
         </Render.If>
         <SearchForm />
         <S.TransactionsList>
-          <TransactionCard {...exampleTransaction} />
-          <TransactionCard {...exampleTransaction2} />
+          {transactions.map((transaction) => (
+            <TransactionCard key={transaction.id} {...transaction} />
+          ))}
         </S.TransactionsList>
       </S.TransactionArea>
       <TransactionModal />

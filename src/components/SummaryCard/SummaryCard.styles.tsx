@@ -54,19 +54,23 @@ export const S = {
   `,
   Status: styled.p``,
   StatusIcon: styled(BaseIcon).attrs({ size: 32 })``,
-  Value: styled.p`
+  Value: styled.p<SummaryCardProps>`
     font-size: 1.6rem;
     color: ${({ theme }) => theme.colors.white};
     font-weight: 700;
-    margin-top: 0.8rem;
+    margin-top: ${({ type }) =>
+      type === SummaryCardVariant.CURRENT ? "0" : "0.8rem"};
 
     ${caseDevice("mobile")} {
       font-size: 1.5rem;
     }
   `,
-  LastTimeAction: styled.p`
+  LastTimeAction: styled.p<SummaryCardProps>`
     font-size: 0.875rem;
     color: ${({ theme }) => theme.colors["gray-500"]};
     margin-top: 0.4rem;
+    color: ${({ type, theme }) =>
+      type === SummaryCardVariant.CURRENT && theme.colors.white};
+    opacity: ${({ type }) => type === SummaryCardVariant.CURRENT && "0.7"};
   `,
 }

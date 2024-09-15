@@ -15,7 +15,7 @@ const BaseIcon = ({ transactionType }: TransactionSelectorProps) => {
 }
 
 export const S = {
-  Container: styled.button<Pick<TransactionSelectorProps, "transactionType">>`
+  Container: styled.button<TransactionSelectorProps>`
     width: 100%;
     display: flex;
     justify-content: center;
