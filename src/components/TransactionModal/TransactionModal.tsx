@@ -1,13 +1,22 @@
-import React, { createRef } from "react"
+import React, { createRef, useState } from "react"
 
 import { S } from "./TransactionModal.styles"
 
-import { TransactionModalProps } from "./TransactionModal.types"
+import {
+  TransactionFormSchema,
+  TransactionModalProps,
+} from "./TransactionModal.types"
 import { TransactionSelector } from "../TransactionSelector/TransactionSelector"
 import { ModalTemplate } from "../../global/components/ModalTemplate"
 import { Input } from "../Input"
 import { Button } from "../Button"
-import { TransactionSelectorProps } from "../TransactionSelector/TransactionSelector.types"
+import * as zod from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Controller, useForm } from "react-hook-form"
+import { TransactionsTypes } from "../../services/transactions/transactions.types"
+import { createTransactionService } from "../../services/transactions/transactions.service"
+import { Select } from "../Select"
+import { useTransactionStore } from "../../global/store/transactionStore/useTransactionStore"
 
 const transactionModalRef = createRef<TransactionModalProps>()
 
@@ -15,11 +24,57 @@ export const openTransactionModal = () => transactionModalRef.current?.open()
 
 export const closeTransactionModal = () => transactionModalRef.current?.close()
 
+export const transactionFormSchema = zod.object({
+  description: zod.string().min(2),
+  value: zod.number().min(0),
+  category: zod.enum([
+    "Alimentação",
+    "Combustível",
+    "Investimentos",
+    "Lazer",
+    "Outros",
+  ]),
+  type: zod.enum(["input", "output"]),
+})
+
 export const TransactionModal: React.FC = () => {
-  const handleSelectTransactionType = ({
-    transactionType,
-  }: TransactionSelectorProps) => {
-    console.log(transactionType)
+  const {
+    handleSubmit,
+    formState: { isSubmitting, isValid },
+    control,
+    reset: resetForm,
+  } = useForm<TransactionFormSchema>({
+    resolver: zodResolver(transactionFormSchema),
+  })
+
+  const { setTransactionsStore, transactions } = useTransactionStore()
+
+  const [selectedTransactionType, setSelectedTransactionType] = useState<
+    "input" | "output" | null
+  >(null)
+
+  const handleSelectTransactionType = (transactionType: "input" | "output") => {
+    setSelectedTransactionType(transactionType)
+  }
+
+  const handleCreateNewTransaction = (formData: TransactionFormSchema) => {
+    const { category, description, type, value } = formData
+    const payload: TransactionsTypes = {
+      id: parseInt(crypto.randomUUID()),
+      title: description,
+      date: new Date().toISOString(),
+      category: category,
+      transaction: {
+        status: type,
+        value: value,
+      },
+    }
+    createTransactionService(payload)?.then((transactionCreated) => {
+      const transactionsUpdated = [...transactions, transactionCreated]
+      setTransactionsStore(transactionsUpdated)
+      resetForm()
+      closeTransactionModal()
+    })
   }
 
   return (
@@ -31,27 +86,87 @@ export const TransactionModal: React.FC = () => {
     >
       <S.Container>
         <S.InputsWrapper>
-          <Input placeholder="Descrição" />
-          <Input placeholder="Preço" />
-          <Input placeholder="Categoria" />
+          <Controller
+            control={control}
+            name="description"
+            render={({ field }) => {
+              return (
+                <Input
+                  value={field.value || ""}
+                  onChange={({ target }) =>
+                    field.onChange((target as HTMLInputElement).value)
+                  }
+                  placeholder="Descrição"
+                />
+              )
+            }}
+          />
+          <Controller
+            control={control}
+            name="value"
+            render={({ field }) => {
+              return (
+                <Input
+                  value={field.value || ""}
+                  onChange={({ target }) =>
+                    field.onChange(parseInt((target as HTMLInputElement).value))
+                  }
+                  placeholder="Preço"
+                />
+              )
+            }}
+          />
+          <Controller
+            control={control}
+            name="category"
+            render={({ field }) => {
+              return (
+                <Select
+                  value={field.value || ""}
+                  onChange={({ target }) =>
+                    field.onChange((target as HTMLInputElement).value)
+                  }
+                />
+              )
+            }}
+          />
         </S.InputsWrapper>
 
-        <S.SelectorWrapper>
-          <TransactionSelector
-            transactionType="input"
-            onClick={() =>
-              handleSelectTransactionType({ transactionType: "input" })
-            }
-          />
-          <TransactionSelector
-            transactionType="output"
-            onClick={() =>
-              handleSelectTransactionType({ transactionType: "output" })
-            }
-          />
-        </S.SelectorWrapper>
+        <Controller
+          control={control}
+          name="type"
+          render={({ field }) => {
+            return (
+              <S.SelectorWrapper>
+                <TransactionSelector
+                  transactionType="input"
+                  isSelected={selectedTransactionType === "input"}
+                  onClick={() => {
+                    field.onChange("input")
+                    handleSelectTransactionType("input")
+                  }}
+                />
+                <TransactionSelector
+                  onChange={() => field.onChange("output")}
+                  transactionType="output"
+                  isSelected={selectedTransactionType === "output"}
+                  onClick={() => {
+                    field.onChange("output")
+                    handleSelectTransactionType("output")
+                  }}
+                />
+              </S.SelectorWrapper>
+            )
+          }}
+        />
 
-        <Button variant="primary" text="Cadastrar" fullWidth />
+        <Button
+          onClick={handleSubmit(handleCreateNewTransaction)}
+          variant="primary"
+          text="Cadastrar"
+          fullWidth
+          disabled={!isValid || isSubmitting}
+        />
       </S.Container>
     </ModalTemplate>
   )

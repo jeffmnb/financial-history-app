@@ -1,37 +1,34 @@
 {
   "transactions": [
     {
-      "id": 1,
-      "title": "Desenvolvimento de site",
-      "type": "input",
-      "category": "OTHER",
+      "id": 52705,
+      "title": "MacDonalds",
+      "date": "2024-09-17T15:08:44.226Z",
+      "category": "Alimentação",
       "transaction": {
-        "value": 14000,
-        "status": "input"
-      },
-      "date": "2022-07-29T19:36:44.505Z"
+        "status": "output",
+        "value": 131
+      }
     },
     {
-      "id": 2,
-      "title": "Desenvolvimento de app",
-      "type": "input",
-      "category": "OTHER",
+      "id": 52702,
+      "title": "SOL",
+      "date": "2024-09-19T13:49:50.224Z",
+      "category": "Investimentos",
       "transaction": {
-        "value": 9000,
-        "status": "input"
-      },
-      "date": "2022-07-30T19:36:44.505Z"
+        "status": "input",
+        "value": 123123
+      }
     },
     {
-      "id": 3,
-      "title": "Mercado",
-      "type": "output",
-      "category": "FOOD",
+      "id": 11,
+      "title": "Internet",
+      "date": "2024-09-19T14:18:44.245Z",
+      "category": "Lazer",
       "transaction": {
-        "value": 350,
-        "status": "output"
-      },
-      "date": "2022-07-27T19:36:44.505Z"
+        "status": "output",
+        "value": 1
+      }
     }
   ]
 }

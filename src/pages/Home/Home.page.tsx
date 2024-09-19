@@ -12,9 +12,9 @@ import { useHomePage } from "./Home.logic"
 
 export const HomePage: React.FC = () => {
   const { isMobile } = useDevice()
-  const { transactions, summaryDetails } = useHomePage()
+  const { transactions, showSkeleton, handleSearchTransactions } = useHomePage()
 
-  if (!transactions.length) return <></>
+  if (showSkeleton) return <>loading</>
 
   return (
     <S.Container>
@@ -23,27 +23,24 @@ export const HomePage: React.FC = () => {
         <SummaryCard
           key={SummaryCardVariant.INPUT}
           type={SummaryCardVariant.INPUT}
-          value={summaryDetails.input}
         />
         <SummaryCard
           key={SummaryCardVariant.OUTPUT}
           type={SummaryCardVariant.OUTPUT}
-          value={summaryDetails.output}
         />
         <SummaryCard
           key={SummaryCardVariant.CURRENT}
           type={SummaryCardVariant.CURRENT}
-          value={summaryDetails.total}
         />
       </S.SummaryCardsList>
       <S.TransactionArea>
         <Render.If isTrue={isMobile}>
           <S.TransactionLabels>
             <S.Label>Transações</S.Label>
-            <S.CountItens>4 itens</S.CountItens>
+            <S.CountItens>{transactions.length} itens</S.CountItens>
           </S.TransactionLabels>
         </Render.If>
-        <SearchForm />
+        <SearchForm onSubmit={handleSearchTransactions} />
         <S.TransactionsList>
           {transactions.map((transaction) => (
             <TransactionCard key={transaction.id} {...transaction} />

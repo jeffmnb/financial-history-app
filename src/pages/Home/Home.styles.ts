@@ -57,6 +57,7 @@ export const S = {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    margin-bottom: 6.25rem;
 
     ${caseDevice("mobile")} {
       gap: 0.75rem;

@@ -1,67 +1,84 @@
-import { getTransactionStore } from "../../global/store/transactionStore/useTransactionStore"
+import { useTransactionStore } from "../../global/store/transactionStore/useTransactionStore"
 import { formatCurrency } from "../../utils/formatter"
 import { S } from "./SummaryCard.styles"
 import { SummaryCardProps, SummaryCardVariant } from "./SummaryCard.types"
 import { closestTo, format } from "date-fns"
 import { ptBR } from "date-fns/locale"
+import { useEffect, useState } from "react"
 
-export const SummaryCard = ({ type, value }: SummaryCardProps) => {
+export const SummaryCard = ({ type }: SummaryCardProps) => {
+  const { transactionsDetails } = useTransactionStore()
+
+  const [details, setDetails] = useState({
+    value: "",
+    title: "",
+    message: "",
+  })
+
   const getLastTransactionDate = () => {
-    const { transactions } = getTransactionStore()
+    if (transactionsDetails?.allTransactions) {
+      const { allTransactions } = transactionsDetails
 
-    const lastInputDates = transactions
-      .filter(({ type }) => type === "input")
-      .map((t) => t.date)
+      const lastInputDates = allTransactions
+        .filter(({ transaction: { status } }) => status === "input")
+        .map((t) => t.date)
 
-    const closerInputDate = format(
-      closestTo(new Date(), lastInputDates)!,
-      "d 'de' MMMM", // 30 de julho
-      {
-        locale: ptBR,
-      },
-    )
+      const closerInputDate = format(
+        closestTo(new Date(), lastInputDates)!,
+        "d 'de' MMMM",
+        { locale: ptBR },
+      )
 
-    const lastOutputDates = transactions
-      .filter(({ type }) => type === "output")
-      .map((t) => t.date)
-    const closerOutputDate = format(
-      closestTo(new Date(), lastOutputDates)!,
-      "d 'de' MMMM",
-      {
-        locale: ptBR,
-      },
-    )
-
-    return { closerInputDate, closerOutputDate }
-  }
-
-  const getDetailsCard = () => {
-    switch (type) {
-      case SummaryCardVariant.INPUT:
-        return {
-          title: "Entradas",
-          message: `Última entrada em ${getLastTransactionDate().closerInputDate}`,
-        }
-      case SummaryCardVariant.OUTPUT:
-        return {
-          title: "Saídas",
-          message: `Última saída em ${getLastTransactionDate().closerOutputDate}`,
-        }
-      default:
-        return { title: "Em conta", message: "Rendendo 102% do CDI" }
+      const lastOutputDates = allTransactions
+        .filter(({ transaction: { status } }) => status === "output")
+        .map((t) => t.date)
+      const closerOutputDate = format(
+        closestTo(new Date(), lastOutputDates)!,
+        "d 'de' MMMM",
+        { locale: ptBR },
+      )
+      return { closerInputDate, closerOutputDate }
     }
   }
+
+  const updateDetailsCard = () => {
+    if (!transactionsDetails) return
+    switch (type) {
+      case SummaryCardVariant.INPUT:
+        setDetails({
+          value: formatCurrency(transactionsDetails?.inputDetails?.total || 0),
+          title: "Entradas",
+          message: `Última entrada em ${getLastTransactionDate()?.closerInputDate}`,
+        })
+        break
+      case SummaryCardVariant.OUTPUT:
+        setDetails({
+          value: formatCurrency(transactionsDetails?.totalDetails?.total || 0),
+          title: "Saídas",
+          message: `Última saída em ${getLastTransactionDate()?.closerOutputDate}`,
+        })
+        break
+      default:
+        setDetails({
+          title: "Em conta",
+          message: "Rendendo 102% do CDI",
+          value: formatCurrency(transactionsDetails?.totalDetails?.total || 0),
+        })
+    }
+  }
+
+  useEffect(() => {
+    updateDetailsCard()
+  }, [])
 
   return (
     <S.Container type={type}>
       <S.StatusArea>
-        <S.Status>{getDetailsCard().title}</S.Status>
+        <S.Status>{details?.title}</S.Status>
         <S.StatusIcon type={type} />
       </S.StatusArea>
-      <S.Value type={type}>{formatCurrency(value!)}</S.Value>
-      <S.LastTimeAction type={type}>
-        {getDetailsCard().message}
-      </S.LastTimeAction>
+      <S.Value type={type}>{details?.value}</S.Value>
+      <S.LastTimeAction type={type}>{details?.message}</S.LastTimeAction>
     </S.Container>
   )
 }

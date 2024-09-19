@@ -2,7 +2,7 @@ import { useDevice } from "../../hooks/useDevice"
 import { formatCurrency } from "../../utils/formatter"
 import { Render } from "../Render/Render"
 import { S } from "./TransactionCard.styles"
-import { CategoryValue, TransactionCardProps } from "./TransactionCard.types"
+import { TransactionCardProps } from "./TransactionCard.types"
 import { format } from "date-fns"
 
 export const TransactionCard = ({
@@ -15,9 +15,6 @@ export const TransactionCard = ({
   const isOutput = status === "output"
   const { isMobile } = useDevice()
 
-  const getCategoryTranslated = (category: string) => {
-    return CategoryValue[category as keyof typeof CategoryValue]
-  }
   return (
     <S.Container>
       <S.Spacer>
@@ -33,7 +30,7 @@ export const TransactionCard = ({
           <Render.If isTrue={isMobile}>
             <S.TagSimple />
           </Render.If>
-          <S.Category>{getCategoryTranslated(category)}</S.Category>
+          <S.Category>{category}</S.Category>
         </S.Wrapper>
 
         <S.Wrapper>

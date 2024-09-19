@@ -1,3 +1,5 @@
 import { InputHTMLAttributes } from "react"
 
-export type InputProps = InputHTMLAttributes<HTMLElement>
+export type InputProps = {
+  messageError?: string
+} & InputHTMLAttributes<HTMLElement>

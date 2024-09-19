@@ -1,16 +1,15 @@
 import axios from "axios"
 
-import { getTransactionStore } from "../../global/store/transactionStore/useTransactionStore"
 import { TransactionsTypes } from "./transactions.types"
 
+const api = axios.create({
+  baseURL: "http://localhost:3000",
+})
+
 export const getTransactionsService = (): Promise<TransactionsTypes[]> => {
-  const { setTransactions } = getTransactionStore()
-  return axios
-    .get("http://localhost:3000/transactions")
-    .then(({ data }) => {
-      setTransactions(data)
-      return data
-    })
+  return api
+    .get("/transactions")
+    .then(({ data }) => data)
     .catch((err) => {
       throw new Error(
         `Error on get transactions at: getTransactionsService. with error: ${err}`,
@@ -18,14 +17,25 @@ export const getTransactionsService = (): Promise<TransactionsTypes[]> => {
     })
 }
 
+export const getTransactionsByQueryService = (
+  query: string,
+): Promise<TransactionsTypes[]> => {
+  return api
+    .get("/transactions", { params: { q: query } })
+    .then(({ data }) => data)
+    .catch((err) => {
+      throw new Error(
+        `Error on get transactions at: getTransactionsByQueryService. with error: ${err}`,
+      )
+    })
+}
+
 export const createTransactionService = (newTransaction: TransactionsTypes) => {
-  const { setTransactions } = getTransactionStore()
   if (newTransaction)
-    return axios
-      .post("http://localhost:3000/transactions", newTransaction)
+    return api
+      .post("transactions", newTransaction)
       .then(({ data }) => {
-        setTransactions(data)
-        return data
+        return data as TransactionsTypes
       })
       .catch((err) => {
         throw new Error(

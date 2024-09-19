@@ -4,7 +4,9 @@ import { MagnifyingGlass } from "@phosphor-icons/react"
 import { caseDevice } from "../../styles/GlobalStyle"
 
 export const S = {
-  Container: styled.div<Omit<ButtonProps, "text">>`
+  Container: styled.button.withConfig({
+    shouldForwardProp: (prop) => !prop.includes("fullWidth" || "variant"),
+  })<Omit<ButtonProps, "text">>`
     min-height: 3.125rem;
     width: ${({ fullWidth }) => (fullWidth ? "100%" : "fit-content")};
     display: flex;
@@ -18,15 +20,21 @@ export const S = {
     background-color: ${({ theme, variant }) =>
       variant === "primary" ? theme.colors["green-700"] : "transparent"};
     border: ${({ theme, variant }) =>
-      variant === "secondary" &&
-      `0.0625rem solid ${theme.colors["green-300"]}`};
+      variant === "secondary"
+        ? `0.0625rem solid ${theme.colors["green-300"]}`
+        : "transparent"};
 
-    &:hover {
+    &:not(:disabled):hover {
       cursor: pointer;
       background-color: ${({ theme }) => theme.colors["green-500"]};
       color: ${({ theme, variant }) =>
         variant === "secondary" && theme.colors.white};
     }
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
     transition: background-color 0.2s;
 
     ${caseDevice("mobile")} {

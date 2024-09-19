@@ -28,7 +28,9 @@ export const S = {
     }
   `,
   Title: styled.p``,
-  Value: styled.p<Pick<TransactionValue, "status">>`
+  Value: styled.p.withConfig({
+    shouldForwardProp: (prop) => prop !== "status",
+  })<Pick<TransactionValue, "status">>`
     color: ${({ theme, status }) =>
       status === "input" ? theme.colors["green-300"] : theme.colors["red-300"]};
 

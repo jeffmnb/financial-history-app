@@ -8,6 +8,6 @@ export type TransactionsTypes = {
   title: string
   type?: "input" | "output"
   transaction: TransactionValue
-  category: CategoryValue
+  category: CategoryValue | string
   date: string
 }

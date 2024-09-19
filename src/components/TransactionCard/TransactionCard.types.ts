@@ -2,7 +2,7 @@ export type TransactionCardProps = {
   id: number
   title: string
   transaction: TransactionValue
-  category: CategoryValue
+  category: string
   date: string
 }
 

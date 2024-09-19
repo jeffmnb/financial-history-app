@@ -6,24 +6,28 @@ const initialStoreValue = {
   transactions: [],
 } as useTransactionStoreProps
 
-const useTransactionStore = create<useTransactionStoreProps>()(
+export const useTransactionStore = create<useTransactionStoreProps>()(
   devtools(
     persist(
-      (set, get) => ({
+      (set) => ({
         ...initialStoreValue,
-        setTransactions: (newTransactions) => {
-          const isExistentTransaction = newTransactions.some((newT) =>
-            get().transactions.some((t) => t.id === newT.id),
+        setTransactionsStore: (transactions) => {
+          set(
+            () => ({
+              transactions: transactions,
+            }),
+            false,
+            "setAllTransactions",
           )
-          if (!isExistentTransaction) {
-            set(
-              ({ transactions }) => ({
-                transactions: [...transactions, ...newTransactions],
-              }),
-              false,
-              "setTransactions",
-            )
-          }
+        },
+        setTransactionsDetails: (transactionsDetails) => {
+          set(
+            () => ({
+              transactionsDetails: transactionsDetails,
+            }),
+            false,
+            "setTransactionsDetails",
+          )
         },
       }),
       {
@@ -31,6 +35,9 @@ const useTransactionStore = create<useTransactionStoreProps>()(
         storage: createJSONStorage(() => sessionStorage),
       },
     ),
+    {
+      trace: true,
+    },
   ),
 )
 

@@ -15,31 +15,32 @@ const BaseIcon = ({ transactionType }: TransactionSelectorProps) => {
 }
 
 export const S = {
-  Container: styled.button<TransactionSelectorProps>`
+  Container: styled.button.withConfig({
+    shouldForwardProp: (prop) =>
+      prop !== "transactionType" && prop !== "isSelected",
+  })<TransactionSelectorProps & { isSelected: boolean }>`
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
-    background-color: ${({ theme }) => theme.colors["gray-700"]};
+    background-color: ${({ theme, isSelected, transactionType }) =>
+      isSelected
+        ? transactionType === "input"
+          ? theme.colors["green-700"]
+          : theme.colors["red-400"]
+        : theme.colors["gray-700"]};
     padding: 1rem;
     margin-bottom: 1rem;
     border-radius: 0.5rem;
     border: 0;
     box-shadow: none;
+    cursor: pointer;
 
-    &:hover {
-      cursor: pointer;
-      background-color: ${({ theme }) => theme.colors["gray-600"]};
+    &:not(:focus):hover {
+      background-color: ${({ theme, isSelected }) =>
+        !isSelected && theme.colors["gray-600"]};
       transition: background-color 0.2s;
-    }
-
-    &:focus {
-      background-color: ${({ theme, transactionType }) =>
-        transactionType === "input"
-          ? theme.colors["green-700"]
-          : theme.colors["red-400"]};
-      color: ${({ theme }) => theme.colors.white};
     }
   `,
   Icon: styled(BaseIcon)``,
