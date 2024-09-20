@@ -9,12 +9,13 @@ import { useDevice } from "../../hooks/useDevice"
 import { SearchForm } from "../../components/SearchForm"
 import { TransactionModal } from "../../components/TransactionModal"
 import { useHomePage } from "./Home.logic"
+import { Loading } from "../../global/components/Loading"
 
 export const HomePage: React.FC = () => {
   const { isMobile } = useDevice()
   const { transactions, showSkeleton, handleSearchTransactions } = useHomePage()
 
-  if (showSkeleton) return <>loading</>
+  if (showSkeleton) return <Loading />
 
   return (
     <S.Container>
@@ -42,9 +43,14 @@ export const HomePage: React.FC = () => {
         </Render.If>
         <SearchForm onSubmit={handleSearchTransactions} />
         <S.TransactionsList>
-          {transactions.map((transaction) => (
+         <Render.If isTrue={!!transactions.length}>
+         {transactions.map((transaction) => (
             <TransactionCard key={transaction.id} {...transaction} />
           ))}
+         </Render.If>
+         <Render.If isTrue={!transactions.length}>
+          <S.EmptyText>Opps! Não encontrei esta transação 🙁</S.EmptyText>
+         </Render.If>
         </S.TransactionsList>
       </S.TransactionArea>
       <TransactionModal />

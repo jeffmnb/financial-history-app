@@ -56,11 +56,16 @@ export const S = {
   TransactionsList: styled.div`
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 0.5rem;
     margin-bottom: 6.25rem;
 
     ${caseDevice("mobile")} {
       gap: 0.75rem;
     }
+  `,
+  EmptyText: styled.p`
+    margin-top: 3rem;
+    color: ${({ theme }) => theme.colors["gray-300"]};
   `,
 }

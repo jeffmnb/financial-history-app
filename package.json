@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:server": "json-server server.json -p 3000 -w -d 1000",
+    "dev:server": "json-server server.json -p 3000 -w -d 2000",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -20,6 +20,7 @@
     "axios": "^1.7.7",
     "date-fns": "^3.6.0",
     "framer-motion": "^11.4.0",
+    "lottie-react": "^2.4.0",
     "postcss": "^8.4.45",
     "postcss-custom-properties-fallback": "^1.0.2",
     "react": "^18.3.1",

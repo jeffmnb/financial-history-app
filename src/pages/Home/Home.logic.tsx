@@ -18,6 +18,7 @@ export const useHomePage = () => {
   const [showSkeleton, setShowSkeleton] = useState<boolean>(false)
 
   const getTransactions = () => {
+    setShowSkeleton(true)
     getTransactionsService()
       .then((res) => {
         setTransactionsStore(res)

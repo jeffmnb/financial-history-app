@@ -42,7 +42,6 @@ export const SummaryCard = ({ type }: SummaryCardProps) => {
   }
 
   const updateDetailsCard = () => {
-    if (!transactionsDetails) return
     switch (type) {
       case SummaryCardVariant.INPUT:
         setDetails({
