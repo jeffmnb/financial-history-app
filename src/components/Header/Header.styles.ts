@@ -9,6 +9,10 @@ export const S = {
     height: 12.6rem;
     padding: 2.5rem 10rem 0 10rem;
 
+    ${caseDevice("tablet")} {
+      padding: 2.5rem 5rem 0 5rem;
+    }
+
     ${caseDevice("mobile")} {
       padding: 2rem 1.5rem;
     }

@@ -25,9 +25,8 @@ export const S = {
     }
 
     ${caseDevice("tablet")} {
-      padding-right: 10rem;
+      padding: 0 5rem 0 5rem;
       justify-content: start;
-      padding: 0 10rem;
       gap: 2rem;
     }
   `,
@@ -36,6 +35,10 @@ export const S = {
     top: 20rem;
     padding: 0 10em;
     width: 100%;
+
+    ${caseDevice("tablet")} {
+      padding: 2.5rem 5rem 0 5rem;
+    }
 
     ${caseDevice("mobile")} {
       padding: 0 1.5em;
