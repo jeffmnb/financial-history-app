@@ -52,7 +52,7 @@ export const SummaryCard = ({ type }: SummaryCardProps) => {
         break
       case SummaryCardVariant.OUTPUT:
         setDetails({
-          value: formatCurrency(transactionsDetails?.totalDetails?.total || 0),
+          value: formatCurrency(transactionsDetails?.outputDetails?.total || 0),
           title: "Saídas",
           message: `Última saída em ${getLastTransactionDate()?.closerOutputDate}`,
         })
@@ -68,7 +68,7 @@ export const SummaryCard = ({ type }: SummaryCardProps) => {
 
   useEffect(() => {
     updateDetailsCard()
-  }, [])
+  }, [transactionsDetails])
 
   return (
     <S.Container type={type}>

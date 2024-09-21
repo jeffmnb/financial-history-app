@@ -4,16 +4,12 @@ import {
 } from "../../services/transactions/transactions.service"
 import { useTransactionStore } from "../../global/store/transactionStore/useTransactionStore"
 import { useEffect, useState } from "react"
-import { TransactionsTypes } from "../../services/transactions/transactions.types"
 import { FormSearchType } from "../../components/SearchForm/SearchForm.types"
+import { saveTransactionsDetails } from "../../utils/transaction"
 
 export const useHomePage = () => {
-  const {
-    setTransactionsStore,
-    setTransactionsDetails,
-    transactions,
-    transactionsDetails,
-  } = useTransactionStore()
+  const { setTransactionsStore, transactions, transactionsDetails } =
+    useTransactionStore()
 
   const [showSkeleton, setShowSkeleton] = useState<boolean>(false)
 
@@ -30,37 +26,6 @@ export const useHomePage = () => {
         )
       })
       .finally(() => setShowSkeleton(false))
-  }
-
-  const saveTransactionsDetails = (transactions: TransactionsTypes[] | []) => {
-    const summaryDetails = transactions?.reduce(
-      (acc, transaction) => {
-        const {
-          transaction: { status, value },
-        } = transaction
-        if (status == "input") {
-          acc.input += value
-          acc.total += value
-        } else {
-          acc.output += value
-          acc.total -= value
-        }
-
-        return acc
-      },
-      {
-        input: 0,
-        output: 0,
-        total: 0,
-      },
-    )
-
-    setTransactionsDetails({
-      allTransactions: transactions,
-      inputDetails: { total: summaryDetails?.input! },
-      outputDetails: { total: summaryDetails?.output! },
-      totalDetails: { total: summaryDetails?.total! },
-    })
   }
 
   const handleSearchTransactions = async ({ query }: FormSearchType) => {

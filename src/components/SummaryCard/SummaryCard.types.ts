@@ -7,3 +7,9 @@ export enum SummaryCardVariant {
   OUTPUT = "outputs",
   CURRENT = "current",
 }
+
+export type SummaryDetails = {
+  input: number
+  output: number
+  total: number
+}

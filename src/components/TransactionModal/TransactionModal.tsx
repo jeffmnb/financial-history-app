@@ -17,6 +17,7 @@ import { TransactionsTypes } from "../../services/transactions/transactions.type
 import { createTransactionService } from "../../services/transactions/transactions.service"
 import { Select } from "../Select"
 import { useTransactionStore } from "../../global/store/transactionStore/useTransactionStore"
+import { saveTransactionsDetails } from "../../utils/transaction"
 
 const transactionModalRef = createRef<TransactionModalProps>()
 
@@ -44,6 +45,12 @@ export const TransactionModal: React.FC = () => {
     control,
     reset: resetForm,
   } = useForm<TransactionFormSchema>({
+    defaultValues: {
+      category: "Alimentação",
+      description: "",
+      type: "input",
+      value: 0,
+    },
     resolver: zodResolver(transactionFormSchema),
   })
 
@@ -72,6 +79,7 @@ export const TransactionModal: React.FC = () => {
     createTransactionService(payload)?.then((transactionCreated) => {
       const transactionsUpdated = [...transactions, transactionCreated]
       setTransactionsStore(transactionsUpdated)
+      saveTransactionsDetails(transactionsUpdated)
       resetForm()
       closeTransactionModal()
     })
