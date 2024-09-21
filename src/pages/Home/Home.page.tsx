@@ -43,14 +43,14 @@ export const HomePage: React.FC = () => {
         </Render.If>
         <SearchForm onSubmit={handleSearchTransactions} />
         <S.TransactionsList>
-         <Render.If isTrue={!!transactions.length}>
-         {transactions.map((transaction) => (
-            <TransactionCard key={transaction.id} {...transaction} />
-          ))}
-         </Render.If>
-         <Render.If isTrue={!transactions.length}>
-          <S.EmptyText>Opps! Não encontrei esta transação 🙁</S.EmptyText>
-         </Render.If>
+          <Render.If isTrue={!!transactions.length}>
+            {transactions.map((transaction) => (
+              <TransactionCard key={transaction.id} {...transaction} />
+            ))}
+          </Render.If>
+          <Render.If isTrue={!transactions.length}>
+            <S.EmptyText>Opps! Não encontrei esta transação 🙁</S.EmptyText>
+          </Render.If>
         </S.TransactionsList>
       </S.TransactionArea>
       <TransactionModal />
