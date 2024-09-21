@@ -119,7 +119,7 @@ export const TransactionModal: React.FC = () => {
                   onChange={({ target }) =>
                     field.onChange(parseInt((target as HTMLInputElement).value))
                   }
-                  placeholder="Preço"
+                  placeholder="Valor"
                 />
               )
             }}

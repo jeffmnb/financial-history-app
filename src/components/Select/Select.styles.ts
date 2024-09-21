@@ -7,6 +7,10 @@ export const S = {
     padding: 1rem;
     border-radius: 0.375rem;
     border: 0 solid transparent;
+    -webkit-appearance: none;
+    &:hover {
+      cursor: pointer;
+    }
   `,
   Option: styled.option``,
 }

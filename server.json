@@ -19,6 +19,26 @@
         "status": "input",
         "value": 123123
       }
+    },
+    {
+      "id": 52706,
+      "title": "Ipiranga",
+      "date": "2024-09-21T13:43:29.840Z",
+      "category": "Combustível",
+      "transaction": {
+        "status": "output",
+        "value": 150
+      }
+    },
+    {
+      "id": 52707,
+      "title": "PIX recebido",
+      "date": "2024-09-21T13:44:20.028Z",
+      "category": "Outros",
+      "transaction": {
+        "status": "input",
+        "value": 500
+      }
     }
   ]
 }
